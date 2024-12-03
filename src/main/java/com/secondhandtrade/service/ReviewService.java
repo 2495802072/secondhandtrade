@@ -6,6 +6,7 @@ import com.secondhandtrade.model.User;
 import com.secondhandtrade.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,6 +25,11 @@ public class ReviewService {
         return reviewRepository.findAll();
     }
 
+    public Review findById(long id) {
+        return reviewRepository.findByReviewId(id);
+    }
+
+    @Transactional
     public void deleteById(long id) {
         reviewRepository.deleteById(id);
     }

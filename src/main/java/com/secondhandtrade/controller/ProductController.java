@@ -17,7 +17,6 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-    // TODO 报错，序列化失败
     @GetMapping
     public List<Product> getProducts() {
         return productService.findAll();
