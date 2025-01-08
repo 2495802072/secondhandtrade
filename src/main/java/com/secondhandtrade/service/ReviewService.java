@@ -16,9 +16,9 @@ public class ReviewService {
     @Autowired
     private ReviewRepository reviewRepository;
 
-    public void save(Review review) {
+    public Review save(Review review) {
         review.setCreatedAt(LocalDateTime.now());
-        reviewRepository.save(review);
+        return reviewRepository.save(review);
     }
 
     public List<Review> findAll() {

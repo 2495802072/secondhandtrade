@@ -24,8 +24,7 @@ public class ReviewController {
 
     @PostMapping
     public Review addReview(@RequestBody Review review) {
-        reviewService.save(review);
-        return review;
+        return reviewService.save(review);
     }
 
     @GetMapping("/{id}")
