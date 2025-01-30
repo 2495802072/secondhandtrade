@@ -25,7 +25,7 @@ public class TransactionController {
     }
 
 
-    //增加订单
+    //增加/更新订单
     @PostMapping()
     public Transaction addTransaction(@RequestBody Transaction transaction) {
         return transactionService.save(transaction);
@@ -35,12 +35,6 @@ public class TransactionController {
     @DeleteMapping
     public void deleteTransaction(@RequestBody Transaction transaction) {
         transactionService.deleteTransactionById(transaction.getTransactionId());
-    }
-
-    //update订单
-    @PostMapping
-    public Transaction updateTransaction(@RequestBody Transaction transaction) {
-        return transactionService.save(transaction);
     }
 
 

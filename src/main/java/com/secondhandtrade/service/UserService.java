@@ -53,4 +53,9 @@ public class UserService {
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
+
+    //用户登录
+    public User login(String username, String password) {
+        return userRepository.login(username,password);
+    }
 }

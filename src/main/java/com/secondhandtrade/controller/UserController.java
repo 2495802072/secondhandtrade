@@ -39,6 +39,13 @@ public class UserController {
         }
     }
 
+    //登录
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody User user) {
+        User u = userService.login(user.getUsername(), user.getPassword());
+        return new ResponseEntity<>(u, HttpStatus.OK);
+    }
+
     //通过id查询user
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
