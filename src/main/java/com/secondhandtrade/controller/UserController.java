@@ -1,6 +1,7 @@
 package com.secondhandtrade.controller;
 
 
+import com.secondhandtrade.model.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,9 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
         User u = userService.login(user.getUsername(), user.getPassword());
-        return new ResponseEntity<>(u, HttpStatus.OK);
+        String token = generateToken(u);
+        LoginResponse response = new LoginResponse(token, u);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     //通过id查询user
@@ -79,4 +82,10 @@ public class UserController {
         return ResponseEntity.ok(list);
     }
 
+
+    // TODO 生成token
+    private String generateToken(User user) {
+        // 例如，使用 JWT 或其他方式生成 token
+        return String.valueOf(user.getUserId()); // 示例
+    }
 }

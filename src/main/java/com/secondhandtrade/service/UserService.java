@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -35,6 +37,9 @@ public class UserService {
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
 
+        //密码加密
+        user.setPassword(getSaltedHash(user.getPassword()));
+
         //返回注册的用户信息
         return userRepository.save(user);
     }
@@ -56,6 +61,31 @@ public class UserService {
 
     //用户登录
     public User login(String username, String password) {
+//        return userRepository.login(username,getSaltedHash(password));
         return userRepository.login(username,password);
+    }
+
+    //passWord加密
+    public static String getSaltedHash(String data) {
+        //获取加密密码
+        MessageDigest md;
+        try {
+            md = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println("加密算法获取失败");
+            throw new RuntimeException(e);
+        }
+        byte[] digest = md.digest(data.getBytes());
+        //加密后的密码
+        StringBuilder sb = new StringBuilder();
+        for (byte b : digest) {
+            String hex = Integer.toHexString(b & 0xff);//与1111 1111做位与运算
+            //保证 0~9在转换16进制后仍是2位数
+            if (hex.length() == 1) {
+                hex = '0' + hex;
+            }
+            sb.append(hex);
+        }
+        return sb.toString();
     }
 }
