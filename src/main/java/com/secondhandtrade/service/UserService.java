@@ -25,12 +25,12 @@ public class UserService {
         //判断email唯一
         if (userRepository.existsByEmail(user.getEmail())){
             //抛出异常：email参数非法
-            throw new IllegalArgumentException("Email already exists(邮箱已注册)");
+            throw new IllegalArgumentException("邮箱已注册 (Email already exists)");
         }
 
         //判断username唯一
         if (userRepository.existsByUsername(user.getUsername())){
-            throw new IllegalArgumentException("Username already exists(用户名已存在)");
+            throw new IllegalArgumentException("用户名已存在 (Username already exists)");
         }
 
         //获取时间
@@ -61,8 +61,8 @@ public class UserService {
 
     //用户登录
     public User login(String username, String password) {
-//        return userRepository.login(username,getSaltedHash(password));
-        return userRepository.login(username,password);
+        return userRepository.login(username,getSaltedHash(password));
+//        return userRepository.login(username,password); // 测试加密用
     }
 
     //passWord加密

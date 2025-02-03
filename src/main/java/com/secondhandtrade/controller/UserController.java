@@ -32,11 +32,13 @@ public class UserController {
     public ResponseEntity<?> createUser(@RequestBody User user) {
         try{
             User u = userService.register(user);
-            //请求正确，返回user
-            return new ResponseEntity<>(u, HttpStatus.CREATED);
+            //请求正确，返回token & user
+            String token = generateToken(u);
+            LoginResponse response = new LoginResponse(token, u);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }catch(IllegalArgumentException e){
             //错误的请求，返回错误信息
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
