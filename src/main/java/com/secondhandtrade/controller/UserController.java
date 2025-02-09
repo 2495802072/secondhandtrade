@@ -53,14 +53,12 @@ public class UserController {
 
     //通过id查询user
     @GetMapping("/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable Long id) {
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
         User u = userService.findByUserId(id);
         if (u == null) {
             return ResponseEntity.notFound().build();
         }
-        String token = generateToken(u);
-        LoginResponse response = new LoginResponse(token, u);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(u, HttpStatus.OK);
     }
 
     //通过id删除user
