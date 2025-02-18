@@ -21,9 +21,11 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    //新增product
+    //更新/增加product
     public Product save(Product product) {
-        product.setCreatedAt(LocalDateTime.now());
+        if (!productRepository.existsByProductId(product.getProductId())) {
+            product.setCreatedAt(LocalDateTime.now());
+        }
         product.setUpdatedAt(LocalDateTime.now());
         return productRepository.save(product);
     }

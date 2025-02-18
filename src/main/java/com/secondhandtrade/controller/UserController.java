@@ -27,7 +27,7 @@ public class UserController {
         return userService.findAll();
     }
 
-    //新建用户（用户注册） -- ResponseEntity<?>设置返回的响应体类型不固定，成功返回User，报错返回String报错信息
+    //新建用户/更新用户信息（用户注册） -- ResponseEntity<?>设置返回的响应体类型不固定，成功返回User，报错返回String报错信息
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody User user) {
         try{
@@ -75,7 +75,7 @@ public class UserController {
 
     @GetMapping("/byName/{name}")
     public ResponseEntity<?> getUsersByName(@PathVariable String name) {
-        List<User> list = userService.findByUsername(name);
+        List<User> list = userService.findListByUsername(name);
 
         if (list.isEmpty()) {
             return new ResponseEntity<>("用户未找到", HttpStatus.NOT_FOUND);
