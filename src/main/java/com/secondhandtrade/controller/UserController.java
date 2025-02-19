@@ -45,10 +45,15 @@ public class UserController {
     //登录
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
-        User u = userService.login(user.getUsername(), user.getPassword());
-        String token = generateToken(u);
-        LoginResponse response = new LoginResponse(token, u);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        try {
+            User u = userService.login(user.getUsername(), user.getPassword());
+            String token = generateToken(u);
+            LoginResponse response = new LoginResponse(token, u);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch(IllegalArgumentException e){
+            //错误的请求，返回错误信息
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
     }
 
     //通过id查询user

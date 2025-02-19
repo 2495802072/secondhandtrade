@@ -11,7 +11,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //判断是否存在
     boolean existsByEmail(String email);
     boolean existsByUsername(String username);
-    boolean existsByUserId(Long userId);
 
     @Query("select u from User u where u.username lIKE %?1%")
     List<User> findByUsername(String username);
