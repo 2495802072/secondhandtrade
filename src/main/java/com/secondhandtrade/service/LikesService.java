@@ -4,6 +4,8 @@ import com.secondhandtrade.model.Likes;
 import com.secondhandtrade.model.Product;
 import com.secondhandtrade.model.User;
 import com.secondhandtrade.repository.LikesRepository;
+import com.secondhandtrade.repository.ProductRepository;
+import com.secondhandtrade.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,9 +16,19 @@ import java.util.List;
 public class LikesService {
     @Autowired
     private LikesRepository likesRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     //新建Likes
     public Likes save(Likes likes) {
+        if(userRepository.existsByUserId(likes.getBuyer().getUserId())){
+            throw new IllegalArgumentException("用户id不存在，可能是登录过期");
+        }
+        if(productRepository.existsByProductId(likes.getProduct().getProductId())){
+            throw new IllegalArgumentException("商品不存在，请刷新网页");
+        }
         return likesRepository.save(likes);
     }
 

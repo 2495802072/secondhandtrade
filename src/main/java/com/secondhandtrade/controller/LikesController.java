@@ -28,8 +28,13 @@ public class LikesController {
     //新建Likes
     @PostMapping
     public ResponseEntity<?> addLikes(@RequestBody Likes likes) {
-        Likes saved = likesService.save(likes);
-        return new ResponseEntity<>(saved, HttpStatus.CREATED);
+        try {
+            Likes saved = likesService.save(likes);
+            return new ResponseEntity<>(saved, HttpStatus.CREATED);
+        } catch(IllegalArgumentException e){
+            //错误的请求，返回错误信息
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
     }
 
     //通过id查询Likes
