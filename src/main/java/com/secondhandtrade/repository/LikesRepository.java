@@ -18,4 +18,6 @@ public interface LikesRepository extends JpaRepository<Likes, Long> {
     void deleteByLikesId(Long messageId);
 
     Likes findByLikesId(Long id);
+
+    void deleteByBuyerAndProduct(User buyer, Product product);
 }

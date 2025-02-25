@@ -23,10 +23,11 @@ public class LikesService {
 
     //新建Likes
     public Likes save(Likes likes) {
-        if(userRepository.existsByUserId(likes.getBuyer().getUserId())){
+        System.out.println("=================添加收藏商品==============");
+        if(!userRepository.existsByUserId(likes.getBuyer().getUserId())){
             throw new IllegalArgumentException("用户id不存在，可能是登录过期");
         }
-        if(productRepository.existsByProductId(likes.getProduct().getProductId())){
+        if(!productRepository.existsByProductId(likes.getProduct().getProductId())){
             throw new IllegalArgumentException("商品不存在，请刷新网页");
         }
         return likesRepository.save(likes);
@@ -45,14 +46,33 @@ public class LikesService {
     public void deleteByLikesId(Long id) {
         likesRepository.deleteByLikesId(id);
     }
+    @Transactional
+    public void removeByUserIdAndProductId(Likes likes) {
+        System.out.println("=================移除收藏商品==============");
+        if(!userRepository.existsByUserId(likes.getBuyer().getUserId())){
+            throw new IllegalArgumentException("用户id不存在，可能是登录过期");
+        }
+        if(!productRepository.existsByProductId(likes.getProduct().getProductId())){
+            throw new IllegalArgumentException("商品不存在，请刷新网页");
+        }
+        likesRepository.deleteByBuyerAndProduct(likes.getBuyer(), likes.getProduct());
+    }
 
     //通过Buyer查找Likes
     public List<Likes> findByBuyer(User buyer) {
+        System.out.println("User: " + buyer.getUserId() + "发起Likes查询");
+        if(!userRepository.existsByUserId(buyer.getUserId())){
+            System.out.println("User查询"+buyer.getUserId()+"出错");
+            throw new IllegalArgumentException("用户id不存在，可能是登录过期");
+        }
         return likesRepository.findByBuyer(buyer);
     }
 
     //通过Receiver查找Likes
     public List<Likes> findByProduct(Product product) {
+        if(productRepository.existsByProductId(product.getProductId())){
+            throw new IllegalArgumentException("商品不存在，请刷新网页");
+        }
         return likesRepository.findByProduct(product);
     }
 

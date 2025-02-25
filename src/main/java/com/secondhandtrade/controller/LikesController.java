@@ -30,7 +30,7 @@ public class LikesController {
     public ResponseEntity<?> addLikes(@RequestBody Likes likes) {
         try {
             Likes saved = likesService.save(likes);
-            return new ResponseEntity<>(saved, HttpStatus.CREATED);
+            return new ResponseEntity<>(saved, HttpStatus.OK);
         } catch(IllegalArgumentException e){
             //错误的请求，返回错误信息
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
@@ -57,18 +57,40 @@ public class LikesController {
         }
     }
 
+    //通过外键们删除Likes
+    @DeleteMapping()
+    public ResponseEntity<?> deleteLikes(@RequestBody Likes likes) {
+        try {
+            likesService.removeByUserIdAndProductId(likes);
+            return new ResponseEntity<>(likes.getLikesId()+"已删除", HttpStatus.OK);
+        } catch(IllegalArgumentException e){
+            //错误的请求，返回错误信息
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
+
     //通过发送方查询Likes
     @PostMapping("/buyer")
     public ResponseEntity<?> selectByBuyer(@RequestBody User buyer) {
-        List<Likes> byBuyer = likesService.findByBuyer(buyer);
-        return new ResponseEntity<>(byBuyer, HttpStatus.OK);
+        try {
+            List<Likes> byBuyer = likesService.findByBuyer(buyer);
+            return new ResponseEntity<>(byBuyer, HttpStatus.OK);
+        } catch(IllegalArgumentException e){
+            //错误的请求，返回错误信息
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
     }
 
     //通过接收查询Likes
     @PostMapping("/product")
     public ResponseEntity<?> selectByProduct(@RequestBody Product product) {
-        List<Likes> byProduct = likesService.findByProduct(product);
-        return new ResponseEntity<>(byProduct, HttpStatus.OK);
+        try {
+            List<Likes> byProduct = likesService.findByProduct(product);
+            return new ResponseEntity<>(byProduct, HttpStatus.OK);
+        } catch(IllegalArgumentException e){
+            //错误的请求，返回错误信息
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
     }
 
 }
