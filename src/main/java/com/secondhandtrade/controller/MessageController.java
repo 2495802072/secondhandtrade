@@ -4,7 +4,6 @@ package com.secondhandtrade.controller;
 import com.secondhandtrade.model.Contacts;
 import com.secondhandtrade.model.Message;
 import com.secondhandtrade.model.User;
-import com.secondhandtrade.repository.MessageRepository;
 import com.secondhandtrade.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,8 +18,6 @@ import java.util.List;
 public class MessageController {
     @Autowired
     private MessageService messageService;
-    @Autowired
-    private MessageRepository messageRepository;
 
     //查询所有Message
     @GetMapping
