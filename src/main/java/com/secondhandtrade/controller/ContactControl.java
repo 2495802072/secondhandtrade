@@ -18,7 +18,7 @@ public class ContactControl {
     private ContactService contactService;
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody Contacts contacts) {
+    public ResponseEntity<String> save(@RequestBody Contacts contacts) {
         try {
             contactService.save(contacts);
             return new ResponseEntity<>("发起聊天",HttpStatus.OK);

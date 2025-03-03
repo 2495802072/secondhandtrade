@@ -1,6 +1,7 @@
 package com.secondhandtrade.controller;
 
 
+import com.secondhandtrade.model.Contacts;
 import com.secondhandtrade.model.Message;
 import com.secondhandtrade.model.User;
 import com.secondhandtrade.repository.MessageRepository;
@@ -67,6 +68,13 @@ public class MessageController {
     public ResponseEntity<?> selectByReceiver(@RequestBody User receiver) {
         List<Message> byReceiver = messageService.findByReceiver(receiver);
         return new ResponseEntity<>(byReceiver, HttpStatus.OK);
+    }
+
+    //通过用户和联系对象查询Message
+    @PostMapping("/contact")
+    public ResponseEntity<?> selectByContact(@RequestBody Contacts contacts) {
+        List<Message> messageList = messageService.findBySenderAndReceiver(contacts.getUser(), contacts.getRecipient());
+        return new ResponseEntity<>(messageList, HttpStatus.OK);
     }
 
 }

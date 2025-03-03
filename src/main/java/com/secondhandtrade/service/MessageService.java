@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -40,9 +41,18 @@ public class MessageService {
         return messageRepository.findBySender(sender);
     }
 
-    //通过Receiver查找Message
+    //通过 Receiver 查找Message
     public List<Message> findByReceiver(User receiver) {
         return messageRepository.findByReceiver(receiver);
+    }
+
+    //通过Sender & Receiver 查找Message
+    public List<Message> findBySenderAndReceiver(User sender, User receiver) {
+        // 将 sender 和 receiver 的 userId 放入 List
+        List<Long> ids = Arrays.asList(sender.getUserId(), receiver.getUserId());
+
+        // 调用 Repository 方法
+        return messageRepository.findBySenderIdAndReceiverId(ids);
     }
 
 }
