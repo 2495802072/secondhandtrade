@@ -17,6 +17,7 @@ public class ContactControl {
     @Autowired
     private ContactService contactService;
 
+    //添加聊天信息
     @PostMapping
     public ResponseEntity<String> save(@RequestBody Contacts contacts) {
         try {
