@@ -58,5 +58,9 @@ public class ProductController {
         return productService.findByCategory(category);
     }
 
+    @PostMapping("/findAll/home")
+    public List<Product> findAllHome(@RequestBody User seller) {
+        return productService.findForHome(seller);
+    }
 
 }

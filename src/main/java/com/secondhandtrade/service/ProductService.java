@@ -55,4 +55,8 @@ public class ProductService {
     public List<Product> findByCategory(String category) {
         return  productRepository.findByCategoryContaining(category);
     }
+
+    public List<Product> findForHome(User seller){
+        return productRepository.findForHome(seller.getUserId());
+    }
 }

@@ -22,6 +22,10 @@ public class Transaction {
 
     private String status;
 
+    private String address;
+
+    private String note;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -82,5 +86,21 @@ public class Transaction {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

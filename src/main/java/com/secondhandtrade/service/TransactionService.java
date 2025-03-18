@@ -1,6 +1,7 @@
 package com.secondhandtrade.service;
 
 import com.secondhandtrade.model.Transaction;
+import com.secondhandtrade.model.User;
 import com.secondhandtrade.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,10 @@ public class TransactionService {
 
     public void deleteTransactionById(Long id) {
         transactionRepository.deleteById(id);
+    }
+
+    public List<Transaction> getTransactionsByBuyer(User buyer) {
+        return transactionRepository.findTransactionByBuyer(buyer);
     }
 
 }
