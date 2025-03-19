@@ -37,15 +37,14 @@ public class ReviewController {
         Review review = reviewService.findById(id);
         if (review == null) {
             return new ResponseEntity<>("目标未找到", HttpStatus.NOT_FOUND);
-        }else{
+        } else {
             reviewService.deleteById(id);
             return new ResponseEntity<>("评论已删除", HttpStatus.OK);
         }
     }
 
     @PostMapping("/user")
-    public List<Review> findByOwner(@RequestBody User owner) {
-        return reviewService.findByOwner(owner);
+    public List<Review> findByUser(@RequestBody User user) {
+        return reviewService.findByUser(user);
     }
-
 }

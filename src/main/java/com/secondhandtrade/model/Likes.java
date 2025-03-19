@@ -1,6 +1,7 @@
 package com.secondhandtrade.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "likes")
@@ -11,21 +12,25 @@ public class Likes {
     private Long likesId;
 
     @ManyToOne
-    @JoinColumn(name = "product_id",referencedColumnName = "product_id")
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "buyer_id",referencedColumnName = "user_id")
+    @JoinColumn(name = "buyer_id", referencedColumnName = "user_id")
     private User buyer;
 
-    public Likes(Long likesId, Product product, User buyer) {
-        this.likesId = likesId;
-        this.product = product;
-        this.buyer = buyer;
+    private LocalDateTime createdAt; // 创建时间
+
+    public Likes() {
     }
 
-    public Likes() {}
+    public Likes(Product product, User buyer) {
+        this.product = product;
+        this.buyer = buyer;
+        this.createdAt = LocalDateTime.now();
+    }
 
+    // Getter & Setter
     public Long getLikesId() {
         return likesId;
     }
@@ -48,5 +53,13 @@ public class Likes {
 
     public void setBuyer(User buyer) {
         this.buyer = buyer;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

@@ -1,7 +1,6 @@
 package com.secondhandtrade.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,27 +10,31 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "message_id")
     private Long messageId;
+
     @ManyToOne
-    @JoinColumn(name = "sender_id",referencedColumnName = "user_id")
+    @JoinColumn(name = "sender_id", referencedColumnName = "user_id")
     private User sender;
+
     @ManyToOne
-    @JoinColumn(name = "receiver_id",referencedColumnName = "user_id")
+    @JoinColumn(name = "receiver_id", referencedColumnName = "user_id")
     private User receiver;
+
     private String content;
     private String status;
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt; // 创建时间
 
     public Message() {
     }
-    public Message(Long messageId, User sender, User receiver, String content, String status, LocalDateTime createdAt) {
-        this.messageId = messageId;
+
+    public Message(User sender, User receiver, String content, String status) {
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
         this.status = status;
-        this.createdAt = createdAt;
+        this.createdAt = LocalDateTime.now();
     }
 
+    // Getter & Setter
     public Long getMessageId() {
         return messageId;
     }
@@ -43,6 +46,7 @@ public class Message {
     public User getSender() {
         return sender;
     }
+
     public void setSender(User sender) {
         this.sender = sender;
     }
@@ -50,6 +54,7 @@ public class Message {
     public User getReceiver() {
         return receiver;
     }
+
     public void setReceiver(User receiver) {
         this.receiver = receiver;
     }

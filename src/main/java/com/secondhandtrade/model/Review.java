@@ -1,7 +1,6 @@
 package com.secondhandtrade.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,34 +12,44 @@ public class Review {
     private Long reviewId;
 
     @ManyToOne
-    @JoinColumn(name = "product_id",referencedColumnName = "product_id")
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
     private Product product;
-    @ManyToOne
-    @JoinColumn(name = "user_id",referencedColumnName = "user_id")
-    private User owner;
 
-    private int rating; //评级 1~10
-    private String comment;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User user; // 评论用户
+
+    private int rating; // 评分：1~10
+    private String comment; // 评论内容
 
     private LocalDateTime createdAt;
 
     public Review() {
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    // Getter & Setter
+    public Long getReviewId() {
+        return reviewId;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setReviewId(Long reviewId) {
+        this.reviewId = reviewId;
     }
 
-    public String getComment() {
-        return comment;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getRating() {
@@ -51,24 +60,19 @@ public class Review {
         this.rating = rating;
     }
 
-    public Product getProduct() {
-        return product;
-    }
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-    public User getOwner() {
-        return owner;
-    }
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public String getComment() {
+        return comment;
     }
 
-    public Long getReviewId() {
-        return reviewId;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public void setReviewId(Long reviewId) {
-        this.reviewId = reviewId;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

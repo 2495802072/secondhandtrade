@@ -16,43 +16,41 @@ public class MessageService {
     @Autowired
     private MessageRepository messageRepository;
 
-    //新建Message
+    // 保存消息
     public Message save(Message message) {
         message.setCreatedAt(LocalDateTime.now());
         return messageRepository.save(message);
     }
 
-    //查询所有Message
+    // 查询所有消息
     public List<Message> findAll() {
         return messageRepository.findAll();
     }
 
-    //通过id查找Message
-    public Message findById(Long id) {return messageRepository.findByMessageId(id);}
+    // 根据ID查询消息
+    public Message findById(Long id) {
+        return messageRepository.findByMessageId(id);
+    }
 
+    // 根据ID删除消息
     @Transactional
-    //通过id删除Message
     public void deleteByMessageId(Long id) {
         messageRepository.deleteByMessageId(id);
     }
 
-    //通过Sender查找Message
+    // 根据发送者查询消息
     public List<Message> findBySender(User sender) {
         return messageRepository.findBySender(sender);
     }
 
-    //通过 Receiver 查找Message
+    // 根据接收者查询消息
     public List<Message> findByReceiver(User receiver) {
         return messageRepository.findByReceiver(receiver);
     }
 
-    //通过Sender & Receiver 查找Message
+    // 根据发送者和接收者查询消息
     public List<Message> findBySenderAndReceiver(User sender, User receiver) {
-        // 将 sender 和 receiver 的 userId 放入 List
         List<Long> ids = Arrays.asList(sender.getUserId(), receiver.getUserId());
-
-        // 调用 Repository 方法
         return messageRepository.findBySenderIdAndReceiverId(ids);
     }
-
 }

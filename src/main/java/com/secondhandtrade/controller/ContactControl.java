@@ -17,23 +17,24 @@ public class ContactControl {
     @Autowired
     private ContactService contactService;
 
-    //添加聊天信息
+    // 添加联系人
     @PostMapping
     public ResponseEntity<String> save(@RequestBody Contacts contacts) {
         try {
             contactService.save(contacts);
-            return new ResponseEntity<>("发起聊天",HttpStatus.OK);
-        } catch(IllegalArgumentException e){
-            //错误的请求，返回错误信息
+            return new ResponseEntity<>("发起聊天", HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
+    // 根据用户查询联系人
     @PostMapping("/user")
-    public List<Contacts> getContactByUser(@RequestBody User user){
+    public List<Contacts> getContactByUser(@RequestBody User user) {
         return contactService.getContactByUser(user);
     }
 
+    // 删除联系人
     @DeleteMapping
     public void delete(@RequestBody Contacts contacts) {
         contactService.delete(contacts);

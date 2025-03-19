@@ -2,6 +2,7 @@ package com.secondhandtrade.model;
 
 import com.secondhandtrade.key.ContactsId;
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "contacts")
@@ -17,13 +18,18 @@ public class Contacts {
     @JoinColumn(name = "recipient_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     private User recipient;
 
-    public Contacts() {}
+    private LocalDateTime createdAt; // 创建时间
+
+    public Contacts() {
+    }
 
     public Contacts(User user, User recipient) {
         this.user = user;
         this.recipient = recipient;
+        this.createdAt = LocalDateTime.now();
     }
 
+    // Getter & Setter
     public User getUser() {
         return user;
     }
@@ -38,5 +44,13 @@ public class Contacts {
 
     public void setRecipient(User recipient) {
         this.recipient = recipient;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

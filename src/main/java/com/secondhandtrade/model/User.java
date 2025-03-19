@@ -1,7 +1,6 @@
 package com.secondhandtrade.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -10,33 +9,40 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long userId; //主键，SQL自动生成
-    @Column(name = "username",unique = true)
+    private Long userId; // 主键，SQL自动生成
+
+    @Column(name = "username", unique = true)
     private String username;
-    @Column(name = "password",nullable = false)
+
+    @Column(name = "password", nullable = false)
     private String password;
-    @Column(name = "email",unique = true)
+
+    @Column(name = "email", unique = true)
     private String email;
+
     private String phone;
     private String role;
+    private String avatarUrl; // 用户头像URL
 
-    private LocalDateTime createdAt;//（+8时区）
-    private LocalDateTime updatedAt;
+    private LocalDateTime createdAt; // 创建时间
+    private LocalDateTime updatedAt; // 更新时间
 
     public User() {
     }
-    public User(Long userId, String username, String password, String email, String phone, String role, LocalDateTime createdAt, LocalDateTime updatedAt) {
+
+    public User(Long userId, String username, String password, String email, String phone, String role, String avatarUrl, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.email = email;
         this.phone = phone;
         this.role = role;
+        this.avatarUrl = avatarUrl;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    //Getter & Setter
+    // Getter & Setter
     public Long getUserId() {
         return userId;
     }
@@ -83,6 +89,14 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     public LocalDateTime getCreatedAt() {
