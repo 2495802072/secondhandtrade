@@ -49,8 +49,13 @@ public class ProductController {
 
     // 通过卖家查询商品
     @PostMapping("/bySeller")
-    public List<Product> findBySeller(@RequestBody User seller) {
-        return productService.findBySeller(seller);
+    public ResponseEntity<?> findBySeller(@RequestBody User seller) {
+        try {
+            List<Product> bySeller = productService.findBySeller(seller);
+            return new ResponseEntity<>(bySeller, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
     }
 
     // 通过标题查询商品
@@ -65,7 +70,7 @@ public class ProductController {
         return productService.findByCategory(category);
     }
 
-    // 查找首页推荐商品
+    // 登录后首页过滤自己的商品
     @PostMapping("/findAll/home")
     public List<Product> findAllHome(@RequestBody User seller) {
         return productService.findForHome(seller);
