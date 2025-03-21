@@ -86,6 +86,6 @@ public class UserController {
     // 生成Token（示例：使用JWT）
     private String generateToken(User user) {
         // 实际项目中应使用JWT库生成Token
-        return "Bearer " + user.getUserId(); // 示例
+        return String.valueOf(user.getUserId());
     }
 }

@@ -22,7 +22,7 @@ public class ProductService {
 
     // 更新/增加product
     public Product save(Product product) {
-        if (productRepository.existsByProductId(product.getProductId())) {
+        if (!productRepository.existsByProductId(product.getProductId())) {
             product.setCreatedAt(LocalDateTime.now());
         }
         product.setUpdatedAt(LocalDateTime.now());

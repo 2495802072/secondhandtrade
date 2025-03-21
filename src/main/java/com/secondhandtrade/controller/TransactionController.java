@@ -18,6 +18,7 @@ public class TransactionController {
 
     @GetMapping
     public List<Transaction> getAllTransactions() {
+        System.out.println(1);
         return transactionService.getAllTransactions();
     }
 

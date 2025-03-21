@@ -2,6 +2,10 @@ package com.secondhandtrade.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "transactions")
@@ -112,5 +116,13 @@ public class Transaction {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public List<String> getItems() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd");
+        //返回值加入月日，让日期也被FP-Growth统计推荐
+        //TODO 返回值加入学生专业号，让专业号也被加入统计推荐
+        String formattedDate = "Date:"+this.createdAt.format(formatter);
+        return List.of(formattedDate,product.getTitle());
     }
 }
