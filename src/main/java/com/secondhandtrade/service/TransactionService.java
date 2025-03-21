@@ -1,7 +1,9 @@
 package com.secondhandtrade.service;
 
+import com.secondhandtrade.model.Product;
 import com.secondhandtrade.model.Transaction;
 import com.secondhandtrade.model.User;
+import com.secondhandtrade.repository.ProductRepository;
 import com.secondhandtrade.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,11 +11,14 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     public List<Transaction> getAllTransactions() {
         return transactionRepository.findAll();
@@ -59,4 +64,22 @@ public class TransactionService {
 
         return transactionData;
     }
+
+    public List<Transaction> getTransactionsByProductTitle(String title) {
+        // 根据商品标题模糊查询获取商品列表
+        List<Product> listProduct = productRepository.findByTitleContaining(title);
+
+        // 提取商品ID列表
+        List<Long> productIds = listProduct.stream()
+                .map(Product::getProductId)
+                .collect(Collectors.toList());
+
+        // 根据商品ID列表查询交易记录
+        return transactionRepository.findByProductIdIn(productIds);
+    }
+
+    public List<Transaction> getTransactionsByProduct(Product product) {
+        return transactionRepository.findByProduct(product);
+    }
+
 }

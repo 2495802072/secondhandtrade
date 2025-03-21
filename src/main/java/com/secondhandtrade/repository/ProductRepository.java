@@ -25,4 +25,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("select p from Product p where p.seller.userId != ?1 and p.status = '在售'")
     List<Product> findForHome(long userId);
+
 }
