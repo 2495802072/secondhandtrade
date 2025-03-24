@@ -47,6 +47,14 @@ public class CategoryService {
         return categoryRepository.findByDescriptionContaining(description);
     }
 
+    // 根据父类别ID查询子分类（支持 parentId 为 -1）
+    public List<Category> getCategoriesByParentId(Long parentId) {
+        if (parentId == -1) {
+            return categoryRepository.findByParentIdIsNull();
+        }
+        return categoryRepository.findByParentId(parentId);
+    }
+
     // 删除类别
     public void deleteCategoryById(Long id) {
         categoryRepository.deleteById(id);

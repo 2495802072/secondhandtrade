@@ -16,15 +16,20 @@ public class Category {
 
     private String description; // 类别描述
 
+    @Column(name = "parent_id")
+    private Long parentId; // 父类别ID（NULL 表示一级分类）
+
     private LocalDateTime createdAt; // 创建时间
     private LocalDateTime updatedAt; // 更新时间
 
     public Category() {
     }
 
-    public Category(String name, String description) {
+    // 新增构造函数，支持 parentId
+    public Category(String name, String description, Long parentId) {
         this.name = name;
         this.description = description;
+        this.parentId = parentId;
     }
 
     // Getter & Setter
@@ -50,6 +55,14 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
     }
 
     public LocalDateTime getCreatedAt() {

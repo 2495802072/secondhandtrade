@@ -60,6 +60,12 @@ public class CategoryController {
         return categoryService.getCategoriesByDescriptionContaining(description);
     }
 
+    // 根据父类别ID查询子分类（支持 parentId 为 -1）
+    @GetMapping("/parent/{parentId}")
+    public List<Category> getCategoriesByParentId(@PathVariable(required = false) Long parentId) {
+        return categoryService.getCategoriesByParentId(parentId);
+    }
+
     // 删除类别
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
