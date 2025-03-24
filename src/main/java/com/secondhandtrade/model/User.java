@@ -11,20 +11,28 @@ public class User {
     @Column(name = "user_id")
     private Long userId; // 主键，SQL自动生成
 
-    @Column(name = "username", unique = true)
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
 
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
+    @Column(name = "phone")
     private String phone;
-    private String role;
+
+    @Column(name = "avatar_url")
     private String avatarUrl; // 用户头像URL
 
+    @Column(name = "role")
+    private String role;
+
+    @Column(name = "created_at")
     private LocalDateTime createdAt; // 创建时间
+
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt; // 更新时间
 
     public User() {
