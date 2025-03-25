@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -82,4 +83,27 @@ public class TransactionService {
         return transactionRepository.findByProduct(product);
     }
 
+    public Transaction patchTransaction(Long id, Map<String, Object> updates) {
+        Transaction Transaction = transactionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Transaction not found"));
+
+        // 动态更新字段（使用反射或手动判断）
+        updates.forEach((key, value) -> {
+            switch (key) {
+                case "address":
+                    Transaction.setAddress((String) value);
+                    break;
+                case "note":
+                    Transaction.setNote((String) value);
+                    break;
+                case "status":
+                    Transaction.setStatus((String) value);
+                    break;
+                case "updatedAt":
+                    Transaction.setUpdatedAt(LocalDateTime.now());
+            }
+        });
+
+        return transactionRepository.save(Transaction);
+    }
 }

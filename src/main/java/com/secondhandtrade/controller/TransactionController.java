@@ -3,14 +3,13 @@ package com.secondhandtrade.controller;
 import com.secondhandtrade.model.Product;
 import com.secondhandtrade.model.Transaction;
 import com.secondhandtrade.model.User;
-import com.secondhandtrade.repository.ProductRepository;
 import com.secondhandtrade.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -18,9 +17,6 @@ import java.util.Optional;
 public class TransactionController {
     @Autowired
     private TransactionService transactionService;
-
-    @Autowired
-    private ProductRepository productRepository;
 
     @GetMapping
     public List<Transaction> getAllTransactions() {
@@ -40,6 +36,16 @@ public class TransactionController {
     @PostMapping
     public Transaction createTransaction(@RequestBody Transaction transaction) {
         return transactionService.save(transaction);
+    }
+
+    //更新字段
+    @PatchMapping("/{id}")
+    public ResponseEntity<Transaction> patchTransaction(
+            @PathVariable Long id,
+            @RequestBody Map<String, Object> updates) {  // 接收动态字段
+
+        Transaction patchedTransaction = transactionService.patchTransaction(id, updates);
+        return ResponseEntity.ok(patchedTransaction);
     }
 
     @DeleteMapping("/{id}")
