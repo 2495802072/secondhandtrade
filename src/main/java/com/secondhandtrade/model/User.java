@@ -29,6 +29,14 @@ public class User {
     @Column(name = "role")
     private String role;
 
+    @ManyToOne
+    @JoinColumn(name = "university_id", referencedColumnName = "university_id")
+    private University university;
+
+    @ManyToOne
+    @JoinColumn(name = "major_id", referencedColumnName = "major_id")
+    private Major major;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt; // 创建时间
 
@@ -97,6 +105,22 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public University getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(University university) {
+        this.university = university;
+    }
+
+    public Major getMajor() {
+        return major;
+    }
+
+    public void setMajor(Major major) {
+        this.major = major;
     }
 
     public String getAvatarUrl() {

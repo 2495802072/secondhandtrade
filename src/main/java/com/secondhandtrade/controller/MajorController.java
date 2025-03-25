@@ -3,11 +3,11 @@ package com.secondhandtrade.controller;
 import com.secondhandtrade.model.Major;
 import com.secondhandtrade.service.MajorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/majors")
 public class MajorController {

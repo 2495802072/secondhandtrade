@@ -23,8 +23,8 @@ public class University {
     @Column(name = "website")
     private String website; // 大学官网
 
-    @OneToMany(mappedBy = "university", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Major> majors; // 大学下的专业列表
+//    @OneToMany(mappedBy = "university", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<Major> majors; // 大学下的专业列表
 
     public University() {
     }
@@ -78,11 +78,11 @@ public class University {
         this.website = website;
     }
 
-    public List<Major> getMajors() {
-        return majors;
-    }
+//    public List<Major> getMajors() {
+//        return majors;
+//    }
 
-    public void setMajors(List<Major> majors) {
-        this.majors = majors;
-    }
+//    public void setMajors(List<Major> majors) {
+//        this.majors = majors;
+//    }
 }

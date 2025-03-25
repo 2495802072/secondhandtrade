@@ -1,7 +1,9 @@
 package com.secondhandtrade.controller;
 
+import com.secondhandtrade.model.Product;
 import com.secondhandtrade.model.Review;
 import com.secondhandtrade.model.User;
+import com.secondhandtrade.service.ProductService;
 import com.secondhandtrade.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,8 @@ import java.util.List;
 public class ReviewController {
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private ProductService productService;
 
     @GetMapping
     public List<Review> getReviews() {
@@ -46,5 +50,11 @@ public class ReviewController {
     @PostMapping("/user")
     public List<Review> findByUser(@RequestBody User user) {
         return reviewService.findByUser(user);
+    }
+
+    @GetMapping("/product/{id}")
+    public List<Review> findByProduct(@PathVariable long id) {
+        Product product = productService.findById(id);
+        return reviewService.findByProduct(product);
     }
 }
